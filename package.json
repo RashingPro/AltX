@@ -7,11 +7,10 @@
   "scripts": {
     "start": "electron-forge start",
     "package": "electron-forge package",
-    "make": "electron-forge make --arch x64 --platform win32",
+    "make": "electron-forge make",
     "publish": "electron-forge publish",
     "lint": "eslint --ext .ts,.tsx ."
   },
-  "keywords": [],
   "author": {
     "name": "RashingPro",
     "email": "rashingpro@yandex.ru"

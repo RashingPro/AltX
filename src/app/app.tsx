@@ -3,6 +3,7 @@ import Main from "./main";
 
 const root = createRoot(document.body);
 root.render(<main>
-        <Main />
+        <Main/>
+        <div className={"drag"}/>
     </main>
 )
