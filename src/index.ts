@@ -16,6 +16,7 @@ const createWindow = (): void => {
     const primaryDisplay = screen.getPrimaryDisplay();
     const rootHeight = primaryDisplay.workAreaSize.height
     const rootWidth = primaryDisplay.workAreaSize.width
+
     const mainWindow = new BrowserWindow({
         height: rootHeight * 0.1,
         width: rootWidth * 0.5,
@@ -28,15 +29,13 @@ const createWindow = (): void => {
         show: false,
         webPreferences: {
             preload: MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY,
-            // devTools: false
+            devTools: false
         },
     });
 
     mainWindow.loadURL(MAIN_WINDOW_WEBPACK_ENTRY);
 
     mainWindow.on("ready-to-show", () => mainWindow.show())
-
-    mainWindow.webContents.openDevTools()
 };
 
 // app.on('ready', createWindow);
