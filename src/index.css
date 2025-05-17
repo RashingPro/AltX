@@ -10,12 +10,43 @@
 
 * {
     background: transparent;
+    border: none;
+    color: var(--foreground-color);
+    max-width: 100vw;
+    max-height: 100vh;
+    font-family: "Roboto Mono", sans-serif;
+    font-size: 1rem;
+    outline: none;
 }
 
 body {
     margin: 0;
-    font-family: "Roboto Mono", sans-serif;
-    color: var(--foreground-color);
-    background: var(--background-color);
+    height: 100vh;
+    width: 100vw;
+    overflow: hidden;
 }
+
+main {
+    background: var(--background-color);
+    border-radius: 1rem;
+    padding: 2rem;
+}
+
+.main-container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.main-container > * {
+    width: 100%;
+}
+
+.main-input {
+    height: 3rem;
+    border: var(--foreground-color) solid .2rem;
+    border-radius: 1rem;
+    padding: .5rem;
 }

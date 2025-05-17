@@ -18,7 +18,7 @@ const createWindow = (): void => {
     const rootWidth = primaryDisplay.workAreaSize.width
 
     const mainWindow = new BrowserWindow({
-        height: rootHeight * 0.1,
+        height: rootHeight * 0.15,
         width: rootWidth * 0.5,
         resizable: false,
         maximizable: false,
@@ -27,6 +27,7 @@ const createWindow = (): void => {
         alwaysOnTop: true,
         frame: false,
         show: false,
+        transparent: true,
         webPreferences: {
             preload: MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY,
             devTools: false
@@ -38,8 +39,8 @@ const createWindow = (): void => {
     mainWindow.on("ready-to-show", () => mainWindow.show())
 };
 
-// app.on('ready', createWindow);
 app.on('ready', () => {
+    globalShortcut.unregisterAll()
     const bgProcessId = createBackgroundProcess();
     globalShortcut.register("Alt+X", () => {
         const windows = BrowserWindow.getAllWindows();
