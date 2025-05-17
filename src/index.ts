@@ -18,8 +18,8 @@ const createWindow = (): void => {
     const rootWidth = primaryDisplay.workAreaSize.width
 
     const mainWindow = new BrowserWindow({
-        height: rootHeight * 0.15,
         width: rootWidth * 0.5,
+        height: rootHeight * .5,
         resizable: false,
         maximizable: false,
         fullscreenable: false,
@@ -35,6 +35,8 @@ const createWindow = (): void => {
     });
 
     mainWindow.loadURL(MAIN_WINDOW_WEBPACK_ENTRY);
+    mainWindow.setMenu(null);
+    mainWindow.setMenuBarVisibility(false);
 
     mainWindow.on("ready-to-show", () => mainWindow.show())
 };

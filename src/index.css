@@ -5,6 +5,7 @@
 
 :root {
     --background-color: #202020;
+    --background-color-hover: #303030;
     --foreground-color: white;
 }
 
@@ -17,6 +18,8 @@
     font-family: "Roboto Mono", sans-serif;
     font-size: 1rem;
     outline: none;
+    top: 0;
+    left: 0;
 }
 
 body {
@@ -24,23 +27,21 @@ body {
     height: 100vh;
     width: 100vw;
     overflow: hidden;
-}
-
-.drag {
-    z-index: 1;
-    -webkit-app-region: drag;
-    position: absolute;
-    height: 100vh;
-    width: 100vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
 main {
     background: var(--background-color);
     border-radius: 1rem;
     padding: 2rem;
+    -webkit-app-region: drag;
 }
 
 .main-container {
+    -webkit-app-region: no-drag;
+    z-index: 1;
     width: 100%;
     display: flex;
     flex-direction: column;
@@ -57,4 +58,23 @@ main {
     border: var(--foreground-color) solid .2rem;
     border-radius: 1rem;
     padding: .5rem;
+    margin-bottom: 1rem;
+}
+
+.context-tips {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: start;
+}
+
+.context-tip {
+    padding: 1rem;
+    width: 100%;
+    text-align: start;
+    border-radius: 1rem;
+}
+
+.context-tip:hover {
+    background: var(--background-color-hover);
 }
