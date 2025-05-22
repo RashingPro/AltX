@@ -2,7 +2,7 @@
   "name": "alt-x",
   "productName": "alt-x",
   "version": "1.0.0",
-  "description": "My Electron application description",
+  "description": "Just say a word...",
   "main": ".webpack/main",
   "scripts": {
     "start": "electron-forge start",
