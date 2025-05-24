@@ -1,4 +1,4 @@
-import { app, BrowserWindow, globalShortcut, screen, Tray, nativeImage, Menu } from 'electron';
+import { app, BrowserWindow, globalShortcut, screen, Tray, nativeImage, Menu, ipcMain, shell } from 'electron';
 declare const MAIN_WINDOW_WEBPACK_ENTRY: string;
 declare const MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY: string;
 
@@ -60,6 +60,11 @@ app.on('ready', async () => {
         }
     })
 });
+
+ipcMain.handle("openUrl", async (_, url: string) => {
+    if (!url.startsWith("https://") && !url.startsWith("http") && !url.includes("://")) url = "https://" + url
+    await shell.openExternal(url)
+})
 
 app.on('activate', () => {
     if (BrowserWindow.getAllWindows().length === 0) {

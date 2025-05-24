@@ -1,7 +1,7 @@
 import React, {useState} from "react";
 
-function ContextTip(props: {icon: React.ReactNode, title: string, description?: string}) {
-    return <button className={`context-tip`}>
+function ContextTip(props: {icon: React.ReactNode, title: string, description?: string, onClick: (event: React.MouseEvent<HTMLButtonElement>) => void}) {
+    return <button className={`context-tip`} onClick={props.onClick}>
         {props.icon}
         {props.title}
         {props.description}
@@ -12,7 +12,8 @@ interface ContextTipButton {
     icon: React.ReactNode,
     title: (input: string) => string,
     description?: string,
-    priority: boolean
+    priority: boolean,
+    onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void
 }
 
 function ContextTips({input}: {input: string}) {
@@ -26,7 +27,8 @@ function ContextTips({input}: {input: string}) {
         {
             icon: <></>,
             title: (inp: string) => `Перейти на ${inp}`,
-            priority: lCaseInput.startsWith("http") || lCaseInput.startsWith("www.") || (!lCaseInput.includes(" ") && lCaseInput.includes("."))
+            priority: lCaseInput.startsWith("http") || lCaseInput.startsWith("www.") || (!lCaseInput.includes(" ") && lCaseInput.includes(".")),
+            onClick: async () => await window.electronApi.openUrl(input)
         },
         {
             icon: <></>,
@@ -40,7 +42,7 @@ function ContextTips({input}: {input: string}) {
     ].sort((a) => a.priority ? -1: 1)
     const elements: React.ReactNode[] = buttons.map((btn, i) => {
         return <>
-            <ContextTip key={i} icon={<></>} title={btn.title(input)}/>
+            <ContextTip key={i} icon={<></>} title={btn.title(input)} onClick={btn.onClick} />
         </>
     })
 
