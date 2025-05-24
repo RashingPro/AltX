@@ -1,10 +1,10 @@
-import './index.css';
-import './app/app';
+import "./index.css";
+import "./app/app";
 
 declare global {
-    interface Window {
-        electronApi?: {
-            openUrl: (url: string) => Promise<void>;
-        }
-    }
+	interface Window {
+		electronApi?: {
+			openUrl: (url: string) => Promise<void>;
+		};
+	}
 }
