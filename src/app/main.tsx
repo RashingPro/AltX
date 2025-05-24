@@ -22,7 +22,7 @@ function ContextTips({input}: {input: string}) {
         {
             icon: <></>,
             title: (inp: string) => `Найти ${inp}`,
-            priority: lCaseInput.startsWith("how ") || lCaseInput.startsWith("what ")
+            priority: lCaseInput.toLowerCase().startsWith("how ") || lCaseInput.toLowerCase().startsWith("what ")
         },
         {
             icon: <></>,

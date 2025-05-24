@@ -1,6 +1,6 @@
 {
   "name": "alt-x",
-  "productName": "alt-x",
+  "productName": "Alt X",
   "version": "1.0.0",
   "description": "Just say a word...",
   "main": ".webpack/main",

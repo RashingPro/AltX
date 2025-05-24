@@ -20,6 +20,7 @@ const createWindow = () => {
     const rootWidth = primaryDisplay.workAreaSize.width
 
     const mainWindow = new BrowserWindow({
+        title: "Alt X",
         titleBarStyle: "hidden",
         width: rootWidth * 0.5,
         height: rootHeight * .5,
