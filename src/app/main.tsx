@@ -10,7 +10,7 @@ function ContextTip(props: {icon: React.ReactNode, title: string, description?: 
 
 interface ContextTipButton {
     icon: React.ReactNode,
-    title: string,
+    title: (input: string) => string,
     description?: string,
     priority: boolean
 }
@@ -20,23 +20,27 @@ function ContextTips({input}: {input: string}) {
     const buttons: ContextTipButton[] = [
         {
             icon: <></>,
-            title: "Найти $1",
+            title: (inp: string) => `Найти ${inp}`,
             priority: lCaseInput.startsWith("how ") || lCaseInput.startsWith("what ")
         },
         {
             icon: <></>,
-            title: "Перейти на $1",
+            title: (inp: string) => `Перейти на ${inp}`,
             priority: lCaseInput.startsWith("http") || lCaseInput.startsWith("www.") || (!lCaseInput.includes(" ") && lCaseInput.includes("."))
         },
         {
             icon: <></>,
-            title: "Выполнить $1",
-            priority: lCaseInput.startsWith("run") || lCaseInput.startsWith("bash")
+            title: (inp: string) => `Выполнить ${inp
+                .replace("run ", "")
+                .replace("bash ", "")
+                .replace("cmd ", "")
+            }`,
+            priority: lCaseInput.startsWith("run ") || lCaseInput.startsWith("bash ") || lCaseInput.startsWith("cmd ")
         }
-    ].sort((a, b) => a.priority ? -1: 1)
+    ].sort((a) => a.priority ? -1: 1)
     const elements: React.ReactNode[] = buttons.map((btn, i) => {
         return <>
-            <ContextTip key={i} icon={<></>} title={btn.title.replace("$1", input)}/>
+            <ContextTip key={i} icon={<></>} title={btn.title(input)}/>
         </>
     })
 
