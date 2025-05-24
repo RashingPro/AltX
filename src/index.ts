@@ -1,4 +1,4 @@
-import { app, BrowserWindow, globalShortcut, screen } from 'electron';
+import { app, BrowserWindow, globalShortcut, screen, Tray, nativeImage, Menu } from 'electron';
 declare const MAIN_WINDOW_WEBPACK_ENTRY: string;
 declare const MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY: string;
 
@@ -7,24 +7,26 @@ if (require('electron-squirrel-startup')) {
     app.quit();
 }
 
-const createBackgroundProcess = () => {
-    const bgWindow = new BrowserWindow({show: false});
-    return bgWindow.id;
+const createBackgroundProcess = async (menu: Menu) => {
+    const image = nativeImage.createEmpty()
+    const bgWindow = new Tray(image);
+    bgWindow.setContextMenu(menu)
+    return bgWindow;
 }
 
-const createWindow = (): void => {
+const createWindow = () => {
     const primaryDisplay = screen.getPrimaryDisplay();
     const rootHeight = primaryDisplay.workAreaSize.height
     const rootWidth = primaryDisplay.workAreaSize.width
 
     const mainWindow = new BrowserWindow({
+        titleBarStyle: "hidden",
         width: rootWidth * 0.5,
         height: rootHeight * .5,
         resizable: false,
         maximizable: false,
         fullscreenable: false,
         minimizable: false,
-        alwaysOnTop: true,
         frame: false,
         show: false,
         transparent: true,
@@ -38,30 +40,25 @@ const createWindow = (): void => {
     mainWindow.setMenu(null);
     mainWindow.setMenuBarVisibility(false);
 
-    mainWindow.on("ready-to-show", () => mainWindow.show())
+    mainWindow.on("blur", () => mainWindow.hide())
+
+    return mainWindow;
 };
 
-app.on('ready', () => {
+app.on('ready', async () => {
     globalShortcut.unregisterAll()
-    const bgProcessId = createBackgroundProcess();
+    const bgProcess = await createBackgroundProcess(Menu.buildFromTemplate([
+        {label: "Open window", type: "normal", click: () => {mainWindow.show()}},
+        {label: "Close", type: "normal" , click: () => {app.quit()}}
+    ]));
+    const mainWindow = createWindow();
     globalShortcut.register("Alt+X", () => {
-        const windows = BrowserWindow.getAllWindows();
-        if (windows.length <= 1) {
-            createWindow();
+        if (mainWindow.isVisible()) {
+            mainWindow.hide()
         } else {
-            for (const win of windows) {
-                if (win.id == bgProcessId)
-                    continue;
-                win.destroy()
-            }
+            mainWindow.show()
         }
     })
-});
-
-app.on('window-all-closed', () => {
-    if (process.platform !== 'darwin') {
-        app.quit();
-    }
 });
 
 app.on('activate', () => {
